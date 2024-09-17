@@ -3,21 +3,32 @@ package com.example.itune.ui
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itune.R
 import com.example.itune.databinding.ActivityTuneBinding
+import com.example.itune.db.ResultDatabase
+import com.example.itune.repository.TuneRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TuneActivity : AppCompatActivity() {
-    lateinit var bottomNavigation: BottomNavigationView
-    lateinit var fragment: View
+    lateinit var binding: ActivityTuneBinding
+    lateinit var viewModel: TuneViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tune)
-        bottomNavigation = findViewById(R.id.bottomNavigationView)
-        fragment = findViewById(R.id.tuneNavHostFragment)
-        bottomNavigation.setupWithNavController(fragment.findNavController())
-    }
+        binding = ActivityTuneBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val repository = TuneRepository(ResultDatabase(this))
+        val viewModelProviderFactory = TuneViewModelProviderFactory(repository)
+
+        viewModel = ViewModelProvider(this,viewModelProviderFactory).get(TuneViewModel::class.java)
+
+        // Get the NavController from the NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.tuneNavHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Set up the BottomNavigationView with NavController
+        binding.bottomNavigationView.setupWithNavController(navController)    }
 }
