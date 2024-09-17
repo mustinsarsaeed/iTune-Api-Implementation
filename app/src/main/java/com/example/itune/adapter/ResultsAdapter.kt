@@ -20,15 +20,11 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() 
     private val differCallback = object : DiffUtil.ItemCallback<Results>() {
         override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
             return oldItem.trackId == newItem.trackId
-            Log.d("ResultsAdapter", "SameItem: ${oldItem.trackId}")
-            Log.d("ResultsAdapter", "SameItem: ${newItem.trackId}")
 
         }
 
         override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {
             return oldItem == newItem
-            Log.d("ResultsAdapter", "Condition: ${oldItem == newItem}")
-
         }
     }
 

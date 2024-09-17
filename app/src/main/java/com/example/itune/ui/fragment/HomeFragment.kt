@@ -37,14 +37,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeViewModalData() {
-        viewModel.tuneList.observe(viewLifecycleOwner, Observer { response ->
-            Log.d(TAG, "onViewCreated: observe inside")
+        viewModel.tuneList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    Log.d(TAG, "onViewCreated: sucess inside")
                     response.data?.let { tuneResponse ->
-                        Log.d(TAG, "onViewCreated: data received")
                         resultAdapter.differ.submitList(tuneResponse.results)
                     }
                 }
@@ -62,7 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
 
-        })
+        }
     }
 
     private fun hideProgressBar() {

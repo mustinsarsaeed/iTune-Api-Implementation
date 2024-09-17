@@ -1,17 +1,14 @@
 package com.example.itune.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.itune.R
 import com.example.itune.databinding.ActivityTuneBinding
 import com.example.itune.db.ResultDatabase
 import com.example.itune.repository.TuneRepository
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TuneActivity : AppCompatActivity() {
     lateinit var binding: ActivityTuneBinding

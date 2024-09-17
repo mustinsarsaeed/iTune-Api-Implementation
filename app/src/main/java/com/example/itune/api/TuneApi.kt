@@ -1,7 +1,6 @@
 package com.example.itune.api
 
 import com.example.itune.TuneResponse
-import com.example.itune.util.Constant.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
