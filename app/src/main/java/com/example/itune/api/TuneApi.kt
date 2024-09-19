@@ -1,6 +1,6 @@
 package com.example.itune.api
 
-import com.example.itune.TuneResponse
+import com.example.itune.model.TuneResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,13 +20,13 @@ interface TuneApi {
 
 
     //For Search List
-    @GET("all")
+    @GET("search")
     suspend fun searchForTune(
-        @Query("q")
+        @Query("entity")
+        term : String,
+        @Query("country")
+        country : String,
+        @Query("term")
         searchQuery : String,
-        @Query("page")
-        pageNumber: Int = 1,
-        @Query("apiKey")
-        apiKey: String
     ) : Response<TuneResponse>
 }

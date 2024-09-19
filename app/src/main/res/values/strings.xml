@@ -6,4 +6,9 @@
     <string name="genre">Genre</string>
     <string name="title">TITLE</string>
     <string name="movie_image">Movie Image</string>
+    <string name="forward_arrow_button">Forward Arrow Button</string>
+    <string name="movie_saved_successfully">Movie Saved Successfully</string>
+    <string name="description">Description</string>
+    <string name="already_added_to_favorites">Already added to favorites</string>
+    <string name="no_internet">Internet Connection Not Availabe</string>
 </resources>

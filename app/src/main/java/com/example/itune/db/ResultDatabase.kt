@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.itune.Results
+import com.example.itune.model.Results
 
 @Database(
     entities = [Results::class],
-    version = 1
+    version = 3
 )
 abstract class ResultDatabase : RoomDatabase() {
 

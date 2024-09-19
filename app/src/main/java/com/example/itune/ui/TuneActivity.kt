@@ -18,7 +18,7 @@ class TuneActivity : AppCompatActivity() {
         binding = ActivityTuneBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val repository = TuneRepository(ResultDatabase(this))
-        val viewModelProviderFactory = TuneViewModelProviderFactory(repository)
+        val viewModelProviderFactory = TuneViewModelProviderFactory(application,repository)
 
         viewModel = ViewModelProvider(this,viewModelProviderFactory).get(TuneViewModel::class.java)
 

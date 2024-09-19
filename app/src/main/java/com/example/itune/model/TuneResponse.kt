@@ -1,4 +1,4 @@
-package com.example.itune
+package com.example.itune.model
 
 data class TuneResponse(
     val resultCount: Int,
