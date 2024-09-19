@@ -10,5 +10,7 @@
     <string name="movie_saved_successfully">Movie Saved Successfully</string>
     <string name="description">Description</string>
     <string name="already_added_to_favorites">Already added to favorites</string>
-    <string name="no_internet">Internet Connection Not Availabe</string>
+    <string name="no_internet">Internet Connection Not Available</string>
+    <string name="last">Last Visit</string>
+    <string name="favorite_icon">Favorite Icon</string>
 </resources>

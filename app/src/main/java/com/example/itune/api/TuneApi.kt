@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface TuneApi {
 
-    //For initial Favorite List
+    //For initial Favorite List for home Screen
     @GET("search")
     suspend fun getTuneList(
         @Query("term")

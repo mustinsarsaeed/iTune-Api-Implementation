@@ -5,7 +5,7 @@ import com.example.itune.db.ResultDatabase
 import com.example.itune.model.Results
 
 class TuneRepository(
-    val db : ResultDatabase
+    private val db : ResultDatabase
 ) {
     suspend fun getAllTuneList(term:String,countryList : String,media:String) =
         RetrofitInstance.api.getTuneList(term,countryList,media)
@@ -17,7 +17,7 @@ class TuneRepository(
 
     fun getSaveResult() = db.getResultsDao().getResults()
 
-    suspend fun deleteResults(result: Results) = db.getResultsDao().deleteResult(result)
+ //   suspend fun deleteResults(result: Results) = db.getResultsDao().deleteResult(result)
 
     suspend fun isMovieInFavorites(trackId: Int): Boolean {
         return db.getResultsDao().isMovieInFavorites(trackId)

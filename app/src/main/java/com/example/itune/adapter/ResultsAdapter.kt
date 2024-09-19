@@ -1,12 +1,10 @@
 package com.example.itune.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -28,7 +26,8 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() 
             itemView.findViewById<TextView>(R.id.tvPrice).text = results.trackPrice.toString()
             itemView.findViewById<TextView>(R.id.tvGenre).text = results.primaryGenreName
 
-            // Observe LiveData to update favorite icon
+
+            //Update Favorite Icon Observe Live Data
             results.trackId?.let {
                 viewModel.isMovieInFavorites(it).observe(itemView.context as LifecycleOwner) { isFavorite ->
                     favoriteMovie.setImageResource(if (isFavorite) R.drawable.ic_fav_selected else R.drawable.ic_fav_unselected)
@@ -55,9 +54,7 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() 
     private val differCallback = object : DiffUtil.ItemCallback<Results>() {
         override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
             return oldItem.trackId == newItem.trackId
-
         }
-
         override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {
             return oldItem == newItem
         }
@@ -83,12 +80,13 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() 
         holder.bind(results, (holder.itemView.context as TuneActivity).viewModel)
     }
 
+    //Listener For Whole Item Click
     private var onItemClickListener : ((Results) -> Unit)? = null
     fun setOnItemClickListener(listener : (Results) -> Unit) {
         onItemClickListener = listener
     }
 
-    // Listener for favorite button clicks
+    //Listener For favorite button clicks
     private var onItemFavButton: ((Results) -> Unit)? = null
     fun setOnItemFavButton(listener: (Results) -> Unit) {
         onItemFavButton = listener

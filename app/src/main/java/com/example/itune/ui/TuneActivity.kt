@@ -11,7 +11,7 @@ import com.example.itune.db.ResultDatabase
 import com.example.itune.repository.TuneRepository
 
 class TuneActivity : AppCompatActivity() {
-    lateinit var binding: ActivityTuneBinding
+    private lateinit var binding: ActivityTuneBinding
     lateinit var viewModel: TuneViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class TuneActivity : AppCompatActivity() {
         val repository = TuneRepository(ResultDatabase(this))
         val viewModelProviderFactory = TuneViewModelProviderFactory(application,repository)
 
-        viewModel = ViewModelProvider(this,viewModelProviderFactory).get(TuneViewModel::class.java)
+        viewModel = ViewModelProvider(this,viewModelProviderFactory)[TuneViewModel::class.java]
 
         // Get the NavController from the NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.tuneNavHostFragment) as NavHostFragment

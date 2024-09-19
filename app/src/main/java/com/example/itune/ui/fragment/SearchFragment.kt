@@ -4,18 +4,15 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itune.R
 import com.example.itune.adapter.ResultsAdapter
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.example.itune.databinding.FragmentSearchBinding
 import com.example.itune.ui.TuneActivity
 import com.example.itune.ui.TuneViewModel
@@ -28,7 +25,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
-    private val tag = "SearchFragment"
     private lateinit var resultAdapter: ResultsAdapter
     private lateinit var binding: FragmentSearchBinding
     private lateinit var viewModel: TuneViewModel
@@ -55,7 +51,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         resultAdapter.setOnItemFavButton { result ->
             result.trackId?.let {
                 viewModel.isMovieInFavorites(it)
-                    .observe(viewLifecycleOwner, Observer { isFavorite ->
+                    .observe(viewLifecycleOwner) { isFavorite ->
                         if (isFavorite) {
                             // Movie is already in favorites, show a toast and set the icon to selected
                             Snackbar.make(
@@ -72,7 +68,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
-                    })
+                    }
             }
 
         }
@@ -106,10 +102,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                 is Resource.Error -> {
                     hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e(tag, "Error Occured $message")
-
-                    }
                 }
 
                 is Resource.Loading -> {
@@ -135,16 +127,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             layoutManager = LinearLayoutManager(activity)
 
         }
-    }
-
-    private fun getSavedData() {
-        hideProgressBar()
-        // Show locally saved data if there's no internet
-        viewModel.getSavedResult().observe(viewLifecycleOwner, Observer { result ->
-            resultAdapter.differ.submitList(result)
-        })
-        Toast.makeText(activity, "No internet connection, showing saved data.", Toast.LENGTH_LONG)
-            .show()
     }
 
     private fun isInternetAvailable(): Boolean {

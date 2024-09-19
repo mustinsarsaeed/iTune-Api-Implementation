@@ -4,13 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.itune.R
@@ -22,8 +20,6 @@ import com.example.itune.util.Resource
 import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-    private val tag = "HomeFragment"
-
     private lateinit var viewModel : TuneViewModel
     private lateinit var resultAdapter : ResultsAdapter
     private lateinit var binding: FragmentHomeBinding
@@ -54,16 +50,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         resultAdapter.setOnItemFavButton { result ->
             result.trackId?.let {
-                viewModel.isMovieInFavorites(it).observe(viewLifecycleOwner, Observer { isFavorite ->
+                viewModel.isMovieInFavorites(it).observe(viewLifecycleOwner) { isFavorite ->
                     if (isFavorite) {
                         // Movie is already in favorites, show a toast and set the icon to selected
-                        Snackbar.make(view, getString(R.string.already_added_to_favorites), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            view,
+                            getString(R.string.already_added_to_favorites),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     } else {
                         // Movie is not in favorites, add it and set the icon to selected
                         viewModel.saveResult(result)
-                        Snackbar.make(view, getString(R.string.movie_saved_successfully), Snackbar.LENGTH_SHORT).show()
-                        }
-                })
+                        Snackbar.make(
+                            view,
+                            getString(R.string.movie_saved_successfully),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
 
         }
@@ -72,9 +76,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun getSavedData() {
         hideProgressBar()
         // Show locally saved data if there's no internet
-        viewModel.getSavedResult().observe(viewLifecycleOwner, Observer { result ->
+        viewModel.getSavedResult().observe(viewLifecycleOwner) { result ->
             resultAdapter.differ.submitList(result)
-        })
+        }
         Toast.makeText(activity, "No internet connection, showing saved data.", Toast.LENGTH_LONG)
             .show()
     }
@@ -92,7 +96,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity,"An error occured : $message",Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity,
+                            getString(R.string.an_error_occurred, message),Toast.LENGTH_LONG).show()
+
                     }
                 }
 

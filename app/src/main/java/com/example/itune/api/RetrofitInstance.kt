@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInstance {
     companion object {
+        // make retrofit by lazy it reduce the memory size only initialize when use
         private val retrofit by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -21,7 +22,7 @@ class RetrofitInstance {
                 .build()
         }
 
-        val api by lazy {
+        val api: TuneApi by lazy {
             retrofit.create(TuneApi::class.java)
         }
     }

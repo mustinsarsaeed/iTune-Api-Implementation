@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_ETHERNET
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +24,6 @@ class TuneViewModel(
     app:Application,
     private val repository : TuneRepository
 ) : AndroidViewModel(app) {
-    val tag = "TuneViewModel"
     val tuneList : MutableLiveData<Resource<TuneResponse>> = MutableLiveData()
 
     val searchList : MutableLiveData<Resource<TuneResponse>> = MutableLiveData()
@@ -67,9 +65,9 @@ class TuneViewModel(
 
     fun getSavedResult() = repository.getSaveResult()
 
-    fun deleteResult(result: Results) = viewModelScope.launch {
-        repository.deleteResults(result)
-    }
+//    fun deleteResult(result: Results) = viewModelScope.launch {
+//        repository.deleteResults(result)
+//    }
 
     fun isMovieInFavorites(trackId: Int): LiveData<Boolean> {
         return liveData {
@@ -85,8 +83,6 @@ class TuneViewModel(
             if(isInternetAvailable()) {
                 val response = repository.getAllTuneList(term,country,media)
                 tuneList.postValue(handleTuneResponse(response))
-            } else {
-                Log.d(tag, "safeTuneCall: No Internet Connection")
             }
         } catch (t: Throwable) {
             when(t) {

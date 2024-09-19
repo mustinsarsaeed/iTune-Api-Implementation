@@ -7,7 +7,7 @@ import com.example.itune.repository.TuneRepository
 
 class TuneViewModelProviderFactory(
     val app: Application,
-    val repository: TuneRepository
+    private val repository: TuneRepository
 ) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>) : T {
         return TuneViewModel(app,repository) as T
