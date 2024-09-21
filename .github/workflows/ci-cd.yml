@@ -1,17 +1,36 @@
-name: Build and Distribute APK
+name: Android CI
 
 on:
   push:
     branches:
-      - main # Change to the branch you want CI/CD to trigger on
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Upload APK Artifact
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: apk-release
+          name: app-release
           path: app/build/outputs/apk/release/app-release.apk
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          files: app/build/outputs/apk/release/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
