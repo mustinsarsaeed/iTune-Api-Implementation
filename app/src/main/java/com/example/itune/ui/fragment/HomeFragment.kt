@@ -20,8 +20,8 @@ import com.example.itune.util.Resource
 import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-    private lateinit var viewModel : TuneViewModel
-    private lateinit var resultAdapter : ResultsAdapter
+    private lateinit var viewModel: TuneViewModel
+    private lateinit var resultAdapter: ResultsAdapter
     private lateinit var binding: FragmentHomeBinding
 
 
@@ -32,11 +32,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as TuneActivity).viewModel
         setUpRecyclerView()
-        if(isInternetAvailable()) {
+        if (isInternetAvailable()) {
             observeViewModalData()
         } else {
             getSavedData()
@@ -44,9 +45,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         resultAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("tunes",it)
+                putSerializable("tunes", it)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_detailFragment,bundle)
+            findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
         }
         resultAdapter.setOnItemFavButton { result ->
             result.trackId?.let {
@@ -79,8 +80,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.getSavedResult().observe(viewLifecycleOwner) { result ->
             resultAdapter.differ.submitList(result)
         }
-        Toast.makeText(activity, "No internet connection, showing saved data.", Toast.LENGTH_LONG)
-            .show()
+        view?.let {
+            Snackbar.make(
+                it,
+                getString(R.string.no_internet_connection_showing_saved_data),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun observeViewModalData() {
@@ -96,9 +102,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Toast.makeText(activity,
-                            getString(R.string.an_error_occurred, message),Toast.LENGTH_LONG).show()
-
+                        view?.let {
+                            Snackbar.make(
+                                it,
+                                getString(R.string.an_error_occurred),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
 
@@ -113,6 +123,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun hideProgressBar() {
         binding.paginationProgressBar.visibility = View.GONE
     }
+
     private fun showProgressBar() {
         binding.paginationProgressBar.visibility = View.VISIBLE
     }
@@ -126,9 +137,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun isInternetAvailable(): Boolean {
-        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+        val networkCapabilities =
+            connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
         return when {
             networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
             networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true

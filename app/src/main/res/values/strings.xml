@@ -14,4 +14,5 @@
     <string name="last">Last Visit</string>
     <string name="favorite_icon">Favorite Icon</string>
     <string name="an_error_occurred">An error  : %1$s</string>
+    <string name="no_internet_connection_showing_saved_data">No internet connection, showing saved data.</string>
 </resources>

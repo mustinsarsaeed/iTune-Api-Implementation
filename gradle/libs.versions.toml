@@ -11,6 +11,7 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 navigation = "2.8.1" # version of the navigation component
 okhttp = "4.9.3"  # Use your preferred version of OkHttp
+googleservice = "4.4.2"
 
 
 [libraries]
@@ -51,5 +52,6 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 navigation-safe-args = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+
 
 
