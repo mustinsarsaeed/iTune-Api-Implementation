@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug  # Change to assembleRelease if you want the release APK
+
+      - name: List APKs
+        run: ls app/build/outputs/apk/debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v3
