@@ -50,6 +50,7 @@ class ResultsAdapter : RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>() 
                 }
             }
 
+
             // Set item click listener for the entire item
             itemView.setOnClickListener {
                 onItemClickListener?.let { click ->
