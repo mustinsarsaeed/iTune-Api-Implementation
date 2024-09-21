@@ -1,18 +1,23 @@
-name: Build and Distribute APK
-
-on:
-  push:
-    branches:
-      - main # Change to the branch you want CI/CD to trigger on
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: apk-release
-          path: app/build/outputs/apk/release/app-release.apk
-
+#name: Build and Distribute APK
+#
+#on:
+#  push:
+#    branches:
+#      - main # Change to the branch you want CI/CD to trigger on
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Upload APK Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: apk-release
+#          path: app/build/outputs/apk/release/app-release.apk
+#
+- name: Upload APK Artifact
+  uses: actions/upload-artifact@v2
+  with:
+    name: apk-release
+    path: app/build/outputs/apk/release/app-release.apk
