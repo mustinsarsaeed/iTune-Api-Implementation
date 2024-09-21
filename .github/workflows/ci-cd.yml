@@ -1,33 +1,23 @@
-name: Build and Distribute APK
+
 
 on:
   push:
     branches:
-      - master  # Change to the branch you want CI/CD to trigger on
+      - master # Change to the branch you want CI/CD to trigger on
 
+name: Build and Distribute APK
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'  # Use the appropriate Java version for your project
-
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug  # Change to assembleRelease if you want the release APK
-
-      - name: List APKs
-        run: ls app/build/outputs/apk/debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v3
         with:
           name: apk-debug
-          path: app/build/outputs/apk/debug/*.apk  # Use wildcard to specify the APK file
+          path: app\build\outputs\apk\debug
+
+
 
 
