@@ -1,3 +1,4 @@
+#file: noinspection YAMLSchemaValidation
 - name: Upload APK Artifact
   uses: actions/upload-artifact@v2
   with:
