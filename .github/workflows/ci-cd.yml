@@ -24,14 +24,17 @@ jobs:
       - name: Build APK
         run: ./gradlew assembleRelease
 
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk-release
+          path: app/build/outputs/apk/release/app-release.apk
+
       - name: Upload APK to Firebase App Distribution
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
-            --app com.example.itune \
-            --groups ITune Testing \
+            --app YOUR_FIREBASE_APP_ID \
+            --groups YOUR_TESTER_GROUP \
             --release-notes "New build from GitHub Actions"
-
-
-
