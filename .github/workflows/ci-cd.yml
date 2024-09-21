@@ -3,7 +3,7 @@ name: Build and Distribute APK
 on:
   push:
     branches:
-      - master # Change to the branch you want CI/CD to trigger on
+      - dev-testing # Change to the branch you want CI/CD to trigger on
 
 jobs:
   build:
