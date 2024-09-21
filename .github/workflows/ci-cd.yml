@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master  # Change to the branch you want CI/CD to trigger on
-
 jobs:
   build:
     runs-on: ubuntu-latest
