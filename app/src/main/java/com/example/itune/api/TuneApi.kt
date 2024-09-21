@@ -18,7 +18,6 @@ interface TuneApi {
         media : String = "movie"
     ) : Response<TuneResponse>
 
-
     //For Search List
     @GET("search")
     suspend fun searchForTune(
