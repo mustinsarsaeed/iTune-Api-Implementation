@@ -3,7 +3,7 @@ name: Build and Distribute APK
 on:
   push:
     branches:
-      - master  # Change to the branch you want CI/CD to trigger on
+      - master
 
 jobs:
   build:
@@ -16,25 +16,15 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '11'  # Use the appropriate Java version for your project
+          java-version: '11'
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug  # Change to assembleRelease if you want the release APK
+        run: ./gradlew assembleDebug
 
-      - name: List APKs
-        run: ls app/build/outputs/apk/debug
-
-      - name: Distribute APK
+      - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}  # Replace with your Firebase app ID
-          token: ${{ secrets.FIREBASE_TOKEN }}    # Replace with your Firebase token
-          groups: 'testers'                        # Replace with your tester group
-          file: app/build/outputs/apk/debug/app-debug.apk  # Path to your APK
-
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: apk-debug
-          path: app/build/outputs/apk/debug/*.apk  # Use wildcard to specify the APK file
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: 'ITune Testing'  # Replace with your tester group
+          file: app/build/outputs/apk/debug/app-debug.apk
