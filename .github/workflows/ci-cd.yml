@@ -1,10 +1,19 @@
 
+
+on:
+  push:
+    branches:
+      - master # Change to the branch you want CI/CD to trigger on
+
+name: Build and Distribute APK
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
             - name: Upload APK Artifact
               uses: actions/upload-artifact@v3
               with:
                 name: apk-debug
                 path: app\build\outputs\apk\debug
-
-
-
-
