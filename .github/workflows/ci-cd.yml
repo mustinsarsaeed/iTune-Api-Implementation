@@ -42,3 +42,4 @@ jobs:
           artifacts: "app/build/outputs/apk/debug/*"
           tag : v0.0.2
           token : ${{ secrets.TOKEN}}
+
