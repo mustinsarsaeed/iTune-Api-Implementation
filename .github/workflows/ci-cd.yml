@@ -37,7 +37,7 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Push to Release
-        uses: ncipollo/release-action@v3
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*"
           tag : v0.0.1
