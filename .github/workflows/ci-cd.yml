@@ -11,11 +11,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 8
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '8'
+          java-version: '17'
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -36,11 +36,9 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Upload APK to Firebase App Distribution
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk \
-            --app com.example.itune \
-            --groups ITune Testing \
-            --release-notes "New build from GitHub Actions"
+      - name: Push to Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app/build/outputs/apk/release/*"
+          tag : v0.0.1
+          token : ${{ secrets.TOKEN}}
