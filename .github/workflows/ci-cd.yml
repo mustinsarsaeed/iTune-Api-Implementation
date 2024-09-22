@@ -30,8 +30,8 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: apk-release
-          path: app/build/outputs/apk/release/app-release.apk
+          name: apk-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
@@ -39,6 +39,6 @@ jobs:
       - name: Push to Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "app/build/outputs/apk/release/*"
-          tag : v0.0.1
+          artifacts: "app/build/outputs/apk/debug/*"
+          tag : v0.0.2
           token : ${{ secrets.TOKEN}}
